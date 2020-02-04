@@ -1,6 +1,6 @@
-#Bookshop
+# Bookshop
 
-###Installing
+### Installing
 
 Backend\
 `git@github.com:spmsupun/bookshop.git` \
@@ -15,10 +15,10 @@ Frontend\
 
 `php bin/console server:start`
 
-###Test
+### Test
 
 `php bin/phpunit`
 
-###Note:
+### Note:
 Recommended environment is linux (Ubuntu).
 Cart's books store using a unique id. when user close the browser, cart item will be lose.

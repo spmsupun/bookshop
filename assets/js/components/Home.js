@@ -89,7 +89,7 @@ export default function Home(props) {
     let removeCoupon = () => {
         setLoader(true);
         console.log(couponCode);
-        axios.post('/invoice/coupon/remove' ).then((response) => {
+        axios.post('/invoice/coupon/remove').then((response) => {
             refresh();
             setLoader(false);
             setCouponAdded(false);
@@ -136,13 +136,13 @@ export default function Home(props) {
             <Dialog open={invoiceStatus} aria-labelledby="form-dialog-title" maxWidth={'lg'}>
                 <DialogTitle id="form-dialog-title">Invoice</DialogTitle>
                 <DialogContent>
-                    <Invoice invoice={invoice}/>
+                    <Invoice invoice={invoice} refresh={refresh}/>
                 </DialogContent>
                 <DialogActions>
-                    {!couponAdded && <Button color="primary" onClick={() => showCouponDialog(true)}>
+                    {invoice && !invoice.coupon && <Button color="primary" onClick={() => showCouponDialog(true)}>
                         Add Coupon
                     </Button>}
-                    {couponAdded && <Button color="primary" onClick={removeCoupon}>
+                    {invoice && invoice.coupon && <Button color="primary" onClick={removeCoupon}>
                         Remove Coupon
                     </Button>}
                     <Button color="primary" onClick={() => showInvoiceDialog(false)}>

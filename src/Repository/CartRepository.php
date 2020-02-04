@@ -55,6 +55,33 @@ class CartRepository extends Repository implements CartRepositoryInterface
     }
 
     /**
+     * @param int $bookId
+     * @param string $sessionId
+     *
+     * @return mixed
+     */
+    public function removeFromCart(int $bookId, string $sessionId)
+    {
+        $book = $this->entityManager->find(Book::class, $bookId);
+
+        try {
+            $bookAvailability = $this->queryBuilder
+                    ->select('cart')
+                    ->from(Cart::class, 'cart')
+                    ->andWhere('cart.sessionId = :session_id')
+                    ->andWhere('cart.book = :book')
+                    ->setParameter('book', $book)
+                    ->setParameter('session_id', $sessionId)
+                    ->getQuery()->getSingleResult();
+
+            $this->entityManager->remove($bookAvailability);
+            $this->entityManager->flush();
+        } catch (NoResultException $e) {
+        } catch (NonUniqueResultException $e) {
+        }
+    }
+
+    /**
      * @param string $sessionId
      *
      * @return mixed

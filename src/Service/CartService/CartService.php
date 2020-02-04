@@ -39,6 +39,15 @@ class CartService
     }
 
     /**
+     * @param $bookId
+     * @param $sessionId
+     */
+    public function removeFromCart($bookId, $sessionId)
+    {
+        $this->repository->removeFromCart($bookId, $sessionId);
+    }
+
+    /**
      * @param $sessionId
      *
      * @return Cart
@@ -62,7 +71,6 @@ class CartService
 
             $cart->addToCart($cartItem);
             $cart->setSessionId($item['session_id']);
-
         }
 
         return $cart;

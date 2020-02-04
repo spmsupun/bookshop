@@ -44,6 +44,18 @@ class CartController extends AbstractController
 
         return new DefaultResponse([]);
     }
+    /**
+     * @Route("/cart/item/remove", name="remove_to_cart",methods={"POST"})
+     * @param Request $request
+     * @return DefaultResponse
+     */
+    public function removeFromCart(Request $request, CartService $cartService, BookService $bookService)
+    {
+        $data = $this->asArray($request->getContent());
+        $cartService->removeFromCart($data['book_id'],$this->sessionId);
+
+        return new DefaultResponse([]);
+    }
 
     /**
      * @Route("/cart/get", name="get_cart",methods={"GET"})

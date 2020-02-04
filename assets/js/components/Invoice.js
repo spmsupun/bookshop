@@ -8,8 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
-
-const TAX_RATE = 0.07;
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+const axios = require('axios').default;
 
 const useStyles = makeStyles({
     table: {
@@ -25,9 +26,9 @@ function priceRow(qty, unit) {
     return qty * unit;
 }
 
-function createRow(desc,category, qty, unit) {
+function createRow(id, desc, category, qty, unit) {
     const price = priceRow(qty, unit);
-    return {desc,category, qty, unit, price};
+    return {id, desc, category, qty, unit, price};
 }
 
 let rows = [];
@@ -41,13 +42,22 @@ export default function Invoice(props) {
     rows = [];
 
     props.invoice.items.map((item) => {
-        rows.push(createRow(item.book.name, item.book.category, item.quantity, item.book.price));
+        rows.push(createRow(item.book.id, item.book.name, item.book.category, item.quantity, item.book.price));
     });
 
     invoiceSubtotal = props.invoice.price.sub_total;
     invoiceDiscount = props.invoice.price.discount_amount;
     invoiceTotal = props.invoice.price.total;
 
+    let removeCartItem = (bookId) => {
+        axios.post('/cart/item/remove', {
+            book_id: bookId
+        }).then((response) => {
+            props.refresh();
+
+        }).catch((error) => {
+        });
+    };
 
     return (
         <TableContainer component={Paper}>
@@ -69,7 +79,11 @@ export default function Invoice(props) {
                 <TableBody>
                     {rows.map(row => (
                         <TableRow key={row.desc}>
-                            <TableCell>{row.desc} <Chip label={row.category}/></TableCell>
+                            <TableCell>
+                                <IconButton aria-label="delete" className={classes.margin}
+                                            onClick={() => removeCartItem(row.id)}>
+                                    <DeleteIcon fontSize="small"/>
+                                </IconButton>{row.desc} <Chip label={row.category}/></TableCell>
                             <TableCell align="right">{row.qty}</TableCell>
                             <TableCell align="right">{row.unit}</TableCell>
                             <TableCell align="right">{ccyFormat(row.price)}</TableCell>

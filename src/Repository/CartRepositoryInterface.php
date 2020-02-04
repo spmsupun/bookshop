@@ -24,6 +24,14 @@ interface CartRepositoryInterface
     public function addToCart(int $book, int $quantity, string $sessionId);
 
     /**
+     * @param int $bookId
+     * @param string $sessionId
+     *
+     * @return mixed
+     */
+    public function removeFromCart(int $bookId, string $sessionId);
+
+    /**
      * @param string $sessionId
      *
      * @return mixed

@@ -1,0 +1,18 @@
+App\Entity\Book:
+    character{1..100}:
+        category: "@book_type_*"
+        description: <realText()>
+        name: <sentence(4, true)>
+        price: <randomFloat(2, 20, 200)>
+App\Entity\Category:
+    book_type_fiction:
+        name: Fiction
+        category_key: fiction
+    book_type_children:
+        name: Children
+        category_key: children
+App\Entity\Coupon:
+    coupon1{1..100}:
+        code: <bothify('?##??')>
+        discount: 15
+        expire_date: <dateTime('now')>

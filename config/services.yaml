@@ -25,3 +25,31 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Repository\CategoryRepositoryInterface: '@App\Repository\CategoryRepository'
+    App\Repository\BookRepositoryInterface: '@App\Repository\BookRepository'
+    app.book_service:
+        class: App\Service\BookService\BookService
+        public: true
+
+    App\Repository\CartRepositoryInterface: '@App\Repository\CartRepository'
+    app.cart_service:
+        class: App\Service\CartService\CartService
+        public: true
+
+    App\Repository\InvoiceRepositoryInterface: '@App\Repository\InvoiceRepository'
+    app.invoice_service:
+        class: App\Service\InvoiceService\InvoiceService
+        public: true
+
+    App\Repository\CouponRepositoryInterface: '@App\Repository\CouponRepository'
+    app.coupon_service:
+        class: App\Service\CouponService\CouponService
+        public: true
+    app.helper_service:
+        class: App\Service\HelperService\Helper
+        public: true
+
+
+
+
